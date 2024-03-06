@@ -1,22 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useLoading } from "../hooks/useLoading";
 
 export const Loading = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (isLoading) {
-        setError(true);
-      }
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [isLoading]);
-
-  useEffect(() => {
-    fakeLoading().then(() => setIsLoading(false));
-  }, []);
+  const { isLoading, error } = useLoading();
 
   if (error) {
     return <p>Not in here, buddy.</p>;
@@ -24,5 +10,3 @@ export const Loading = () => {
 
   return isLoading ? <p>Loading...</p> : <p>Loaded!</p>;
 };
-
-const fakeLoading = () => new Promise((resolve) => setTimeout(resolve, 5000));
